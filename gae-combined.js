@@ -1,4 +1,6 @@
-if (typeof DEBUG_MODE === "undefined"){
+
+					/* ------ gae-variables --- /home/lauzis/www/itdep/wp-content/plugins/google-analytics-events/js-parts/gae-variables.js ------ STARTS */
+					if (typeof DEBUG_MODE === "undefined"){
     var DEBUG_MODE = true;
 }
 
@@ -24,7 +26,11 @@ var HOST = document.location.hostname;
 
 var IS_GA = false;
 
-/*
+					/* ------ gae-variables ---  /home/lauzis/www/itdep/wp-content/plugins/google-analytics-events/js-parts/gae-variables.js ------ ENDS */
+					
+
+					/* ------ gae-functions --- /home/lauzis/www/itdep/wp-content/plugins/google-analytics-events/js-parts/gae-functions.js ------ STARTS */
+					/*
  that could be possible to determine
  if top or bottom element clicked
  getting the position of the element
@@ -305,6 +311,8 @@ function send_event(category, action, label, value){
 
 };
 
+					/* ------ gae-functions ---  /home/lauzis/www/itdep/wp-content/plugins/google-analytics-events/js-parts/gae-functions.js ------ ENDS */
+					
 
 jQuery(function($) {
 
@@ -317,23 +325,56 @@ jQuery(function($) {
       var self = $(this);
       var url=self.attr("href");
       if(!self.hasClass("gae-events")){
-        //[gae-custom-links]
+        
+					/* ------ gae-custom-links --- /home/lauzis/www/itdep/wp-content/plugins/google-analytics-events/js-parts/gae-custom-links.js ------ STARTS */
+					if(self.data("gaCategory") && self.data("gaAction") && self.data("gaLabel")){
+    // <a href="link to somehting or place" data-ga-category="Shopping cart" data-ga-action="Clicked" data-ga-label="In Header">Click me </a>
+    self.click(function(){
+        send_event(self.data("gaCategory"), self.data("gaAction"), self.data("gaLabel"));
+    });
+    self.addClass("gae-events");
+    return;
+};
+
+					/* ------ gae-custom-links ---  /home/lauzis/www/itdep/wp-content/plugins/google-analytics-events/js-parts/gae-custom-links.js ------ ENDS */
+					
 
         //[gae-social-links]
 
         //[gae-file-downloads]
 
-        //[gae-outgoing-links]
+        
+					/* ------ gae-outgoing-links --- /home/lauzis/www/itdep/wp-content/plugins/google-analytics-events/js-parts/gae-outgoing-links.js ------ STARTS */
+					if (is_outgoing_url(url)){
+    self.click(function(){
+        var text = get_link_text(self);
+        send_event("Outgoing links",'Outgoing link clicked', text.trim()+' button clicked');
+    });
+    self.addClass("gae-events");
+    return;
+};
+
+					/* ------ gae-outgoing-links ---  /home/lauzis/www/itdep/wp-content/plugins/google-analytics-events/js-parts/gae-outgoing-links.js ------ ENDS */
+					
 
       }
   });
 
+  //[gae-custom-element-tracking]
+
+  //[gae-search]
+
+  //[gae-mailchimp]
 
   //[gae-form-tracking-gravity]
 
-  //[gae-form-tracking]
+  //[gae-form-tracking-field-change]
 
-  //[gae-custom_element_tracking]
+  
+					/* ------ gae-time-trigger --- /home/lauzis/www/itdep/wp-content/plugins/google-analytics-events/js-parts/gae-time-trigger.js ------ STARTS */
+					//TODO
 
+					/* ------ gae-time-trigger ---  /home/lauzis/www/itdep/wp-content/plugins/google-analytics-events/js-parts/gae-time-trigger.js ------ ENDS */
+					
 
 });
